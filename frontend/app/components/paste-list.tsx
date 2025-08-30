@@ -15,8 +15,8 @@ export const PasteList = async () => {
             paste={{
               ...paste,
               syntaxHighlight: 'Java',
-              formattedRelativeCreatedAt: '5 sec ago',
-              formattedSize: '0.06KB',
+              createdAt: paste.createdAt,
+              size: paste.size,
             }}
           />
         ))}
