@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+
+import { Navbar } from '@/components/layout/navbar';
+
+import { PasteList } from './components/paste-list';
 import './globals.css';
-import { Navbar } from '@/components/navbar';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -30,7 +33,12 @@ export default function RootLayout({
       >
         <Navbar />
 
-        {children}
+        <div className="container mx-auto py-8 px-8 bg-white grow">
+          <div className="flex gap-8 flex-wrap justify-between">
+            {children}
+            <PasteList />
+          </div>
+        </div>
       </body>
     </html>
   );
