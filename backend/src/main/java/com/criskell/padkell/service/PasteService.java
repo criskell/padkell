@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.criskell.padkell.dto.PasteSummaryDto;
 import com.criskell.padkell.entity.Paste;
 import com.criskell.padkell.repository.PasteRepository;
 
@@ -17,12 +18,21 @@ public class PasteService {
         this.pasteRepository = pasteRepository;
     }
 
-    public Paste save(Paste paste) {
-        return pasteRepository.save(paste);
+    public List<PasteSummaryDto> findLatestSummaries() {
+        return pasteRepository.findTop10ByOrderByCreatedAtDesc()
+                .stream()
+                .map(p -> new PasteSummaryDto(
+                p.getId(),
+                p.getTitle(),
+                p.getSize(),
+                p.getSyntaxHighlight(),
+                p.getCreatedAt()
+        ))
+                .toList();
     }
 
-    public List<Paste> findAll() {
-        return pasteRepository.findAll();
+    public Paste save(Paste paste) {
+        return pasteRepository.save(paste);
     }
 
     public Optional<Paste> findById(Long id) {

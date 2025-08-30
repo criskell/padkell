@@ -1,4 +1,4 @@
-import type { GetPaste } from '@/lib/dto/pastes/get';
+import type { GetPasteSummaryDto } from '@/lib/dto/pastes/get';
 
 export const LIST_PASTES_TAG = 'pastes';
 
@@ -10,10 +10,10 @@ export const listPastes = async () => {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to list pastes.');
+    throw new Error('Failed to list paste summaries.');
   }
 
-  const data: GetPaste[] = await response.json();
+  const data: GetPasteSummaryDto[] = await response.json();
 
   return data;
 };

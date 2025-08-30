@@ -26,9 +26,16 @@ public class Paste {
     @Lob
     private String body;
 
-    private String syntaxHighlight = "Java";
+    private Long size;
+
+    private String syntaxHighlight = "Text";
 
     private LocalDateTime expiresAt;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public void setBody(String body) {
+        this.body = body;
+        this.size = (long) body.length();
+    }
 }

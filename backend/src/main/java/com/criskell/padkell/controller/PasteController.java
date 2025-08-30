@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.criskell.padkell.controller.dto.PasteCreateDto;
+import com.criskell.padkell.dto.PasteSummaryDto;
 import com.criskell.padkell.entity.Paste;
 import com.criskell.padkell.service.PasteService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/pastes")
@@ -24,8 +28,8 @@ class PasteController {
     }
 
     @GetMapping
-    public List<Paste> getAll() {
-        return pasteService.findAll();
+    public List<PasteSummaryDto> findLatestSummaries() {
+        return pasteService.findLatestSummaries();
     }
 
     @GetMapping("/{id}")
@@ -36,8 +40,12 @@ class PasteController {
     }
 
     @PostMapping
-    public Paste create(@RequestBody Paste paste) {
-        System.out.println(paste);
+    public Paste create(@Valid @RequestBody PasteCreateDto pasteDto) {
+        Paste paste = new Paste();
+
+        paste.setBody(pasteDto.body());
+        paste.setTitle(pasteDto.title());
+
         return pasteService.save(paste);
     }
 }

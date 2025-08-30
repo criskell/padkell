@@ -1,4 +1,4 @@
-import { listPastes } from '@/lib/queries/paste/list-pastes';
+import { listPastes } from '@/lib/queries/paste/list-paste-summaries';
 import { PasteListItem } from './paste-list-item';
 
 export const PasteList = async () => {
