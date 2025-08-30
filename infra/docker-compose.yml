@@ -1,0 +1,11 @@
+services:
+  mysql:
+    container_name: 'padkell_db'
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=padkell'
+      - 'MYSQL_PASSWORD=padkell'
+      - 'MYSQL_ROOT_PASSWORD=padkell'
+      - 'MYSQL_USER=padkell'
+    ports:
+      - '3306:3306'

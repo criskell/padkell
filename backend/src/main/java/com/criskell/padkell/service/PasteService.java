@@ -1,0 +1,31 @@
+package com.criskell.padkell.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.criskell.padkell.entity.Paste;
+import com.criskell.padkell.repository.PasteRepository;
+
+@Service
+public class PasteService {
+
+    private final PasteRepository pasteRepository;
+
+    public PasteService(PasteRepository pasteRepository) {
+        this.pasteRepository = pasteRepository;
+    }
+
+    public Paste save(Paste paste) {
+        return pasteRepository.save(paste);
+    }
+
+    public List<Paste> findAll() {
+        return pasteRepository.findAll();
+    }
+
+    public Optional<Paste> findById(Long id) {
+        return pasteRepository.findById(id);
+    }
+}
