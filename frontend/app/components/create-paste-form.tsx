@@ -1,47 +1,40 @@
 'use client';
 
+import {
+  ModelOperations,
+  type ModelOperationsOptions,
+} from '@/lib/language-detection';
 import { useAction } from 'next-safe-action/hooks';
-import { setBackend } from '@tensorflow/tfjs-core';
-import { GuessLangWorker } from '@ray-d-song/guesslang-js/worker';
-import Editor, { type OnChange } from '@monaco-editor/react';
-import '@tensorflow/tfjs-backend-webgl';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { createPasteAction } from '@/lib/actions/paste/create-paste';
 import { Label } from '@/components/ui/label';
+import Editor, { type OnChange } from '@monaco-editor/react';
 import { detectLanguages } from '@/lib/detect-languages';
-import { asyncGeneratorToArray } from '@/lib/utils/async-generator-to-array';
 
 export const CreatePasteForm = () => {
   const { execute, result } = useAction(createPasteAction);
-
   const [body, setBody] = useState(null);
   const [language, setLanguage] = useState(null);
-  const guessLangRef = useRef<GuessLangWorker | null>(null);
+  const [modelOperations, setModelOperations] = useState<ModelOperations>(
+    () =>
+      new ModelOperations({
+        modelJsonLoaderFunc: async () =>
+          fetch('/model/model.json').then((response) => response.json()),
+        weightsLoaderFunc: async () =>
+          fetch('/model/group1-shard1of1.bin').then((response) =>
+            response.arrayBuffer()
+          ),
+      })
+  );
 
   const handleContentChange: OnChange = async (value) => {
-    if (language || !value || !guessLangRef.current) return;
-
-    const possibileLanguages = await asyncGeneratorToArray(
-      detectLanguages(guessLangRef.current, value)
-    );
-
-    console.log(possibileLanguages);
+    if (language || !modelOperations || value === '') return;
+    const selectedLanguage = await detectLanguages(modelOperations, value);
+    console.log(selectedLanguage);
   };
-
-  useEffect(() => {
-    const initializeLanguageDetector = async () => {
-      guessLangRef.current = new GuessLangWorker();
-
-      if (!(await setBackend('webgl'))) {
-        console.warn('Tensorflow WebGL backend not enabled.');
-      }
-    };
-
-    initializeLanguageDetector();
-  }, []);
 
   return (
     <form action={execute} className="space-y-8">
