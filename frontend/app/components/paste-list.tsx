@@ -15,7 +15,7 @@ export const PasteList = async () => {
             key={paste.id}
             paste={{
               ...paste,
-              syntaxHighlight: 'Java',
+              language: 'Java',
               createdAt: paste.createdAt,
               size: paste.size,
             }}

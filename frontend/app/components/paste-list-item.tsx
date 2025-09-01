@@ -5,7 +5,7 @@ import { GlobeIcon } from 'lucide-react';
 export type PasteListItemProps = {
   paste: {
     title: string;
-    syntaxHighlight: string;
+    language: string;
     createdAt: string;
     size: number;
   };
