@@ -5,8 +5,9 @@ import { setBackend } from '@tensorflow/tfjs-core';
 import { GuessLangWorker } from '@ray-d-song/guesslang-js/worker';
 import Editor, { type OnChange, type OnMount } from '@monaco-editor/react';
 import '@tensorflow/tfjs-backend-webgl';
+import { editor } from 'monaco-editor';
 
-import { startTransition, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { createPasteAction } from '@/lib/actions/paste/create-paste';
@@ -20,56 +21,60 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { flushSync } from 'react-dom';
-
-const languageAliasToLanguageId = new Map<string, string>();
 
 export const CreatePasteForm = () => {
   const { execute, result } = useAction(createPasteAction);
 
-  const [body, setBody] = useState(null);
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+
   const [language, setLanguage] = useState<string | null>(null);
-  const languageRef = useRef<string | null>(null);
-  const guessLangRef = useRef<GuessLangWorker | null>(null);
   const [languageIds, setLanguageIds] = useState<string[]>([]);
+  const languageAliasToLanguageIdRef = useRef<Map<string, string>>(new Map());
+  const guessLangRef = useRef<GuessLangWorker | null>(null);
 
   const handleContentChange: OnChange = async (value) => {
-    if (language || languageRef.current || !value || !guessLangRef.current)
-      return;
+    if (language || !value || !guessLangRef.current) return;
 
     const possibileLanguages = await asyncGeneratorToArray(
       detectLanguages(guessLangRef.current, value)
     );
 
-    const languageId = possibileLanguages?.[0]?.languageId;
+    const detectedId = possibileLanguages?.[0]?.languageId;
+    if (!detectedId) return;
 
-    if (!languageId) return;
-
-    const resolvedLanguageId = languageAliasToLanguageId.get(
-      languageId.toLowerCase()
+    const resolvedId = languageAliasToLanguageIdRef.current.get(
+      detectedId.toLowerCase()
     );
 
-    if (!resolvedLanguageId) return;
-
-    setLanguage(resolvedLanguageId);
+    if (resolvedId) setLanguage(resolvedId);
   };
 
-  const handleEditorMount: OnMount = async (_, monaco) => {
-    const languages = monaco.languages.getLanguages();
-    const collectedLanguageIds: string[] = [];
+  const handleEditorMount: OnMount = async (editor, monaco) => {
+    const collected: string[] = [];
 
-    languages.forEach((language) => {
-      collectedLanguageIds.push(language.id);
+    const map = new Map<string, string>();
 
+    for (const language of monaco.languages.getLanguages()) {
+      collected.push(language.id);
+      map.set(language.id.toLowerCase(), language.id.toLowerCase());
       language.aliases?.forEach((alias) =>
-        languageAliasToLanguageId.set(
-          alias.toLowerCase(),
-          language.id.toLowerCase()
-        )
+        map.set(alias.toLowerCase(), language.id.toLowerCase())
       );
-    });
+    }
 
-    setLanguageIds(collectedLanguageIds);
+    setLanguageIds(collected);
+    languageAliasToLanguageIdRef.current = map;
+    editorRef.current = editor;
+  };
+
+  const submitPaste = (formData: FormData) => {
+    if (!editorRef.current) return;
+
+    return execute({
+      title: formData.get('title') as string,
+      body: editorRef.current.getValue(),
+      language,
+    });
   };
 
   useEffect(() => {
@@ -85,7 +90,7 @@ export const CreatePasteForm = () => {
   }, []);
 
   return (
-    <form action={execute} className="space-y-8">
+    <form action={submitPaste} className="space-y-8">
       <div>
         <div className="border border-zinc-100 rounded-lg p-2">
           <Editor

@@ -45,6 +45,7 @@ class PasteController {
 
         paste.setBody(pasteDto.body());
         paste.setTitle(pasteDto.title());
+        paste.setLanguage(pasteDto.language());
 
         return pasteService.save(paste);
     }

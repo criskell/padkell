@@ -22,7 +22,8 @@ export const PasteListItem = ({ paste }: PasteListItemProps) => {
       <div>
         <p className="text-blue-900">{paste.title}</p>
         <p className="text-zinc-500">
-          Java | {formattedRelativeCreatedDate} | {formattedSize}
+          {paste.language || 'plaintext'} | {formattedRelativeCreatedDate} |{' '}
+          {formattedSize}
         </p>
       </div>
     </li>

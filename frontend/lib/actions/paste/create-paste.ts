@@ -8,12 +8,11 @@ import { actionClient } from '@/lib/safe-action';
 import { revalidateTag } from 'next/cache';
 import { LIST_PASTES_TAG } from '@/lib/queries/paste/list-paste-summaries';
 
-const createPasteInputSchema = zfd.formData(
-  z.object({
-    title: z.string(),
-    body: z.string().nonempty(),
-  })
-);
+const createPasteInputSchema = z.object({
+  title: z.string(),
+  language: z.string().default('plaintext').nullish(),
+  body: z.string().nonempty(),
+});
 
 export const createPasteAction = actionClient
   .inputSchema(createPasteInputSchema)

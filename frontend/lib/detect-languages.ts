@@ -3,7 +3,7 @@
 import type { GuessLang, ModelResult } from '@ray-d-song/guesslang-js';
 import type { GuessLangWorker } from '@ray-d-song/guesslang-js/worker';
 
-const expectedRelativeConfidence = 0.2;
+const expectedRelativeConfidence = 0.08;
 const positiveConfidenceCorrectionBucket1 = 0.05;
 const positiveConfidenceCorrectionBucket2 = 0.025;
 const negativeConfidenceCorrection = 0.5;
@@ -40,7 +40,6 @@ const adjustLanguageConfidence = (modelResult: ModelResult): ModelResult => {
     case 'bat':
     case 'ini':
     case 'makefile':
-    case 'sql':
     // languages that aren't provided by default in VS Code
     case 'csv':
     case 'toml':
@@ -68,6 +67,8 @@ export async function* detectLanguages(
   } catch (e) {
     console.warn(e);
   }
+
+  console.log(modelResults);
 
   if (
     !modelResults ||

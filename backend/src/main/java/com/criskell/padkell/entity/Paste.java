@@ -2,6 +2,7 @@ package com.criskell.padkell.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,7 +29,7 @@ public class Paste {
 
     private Long size;
 
-    private String syntaxHighlight = "Text";
+    private String language = "plaintext";
 
     private LocalDateTime expiresAt;
 

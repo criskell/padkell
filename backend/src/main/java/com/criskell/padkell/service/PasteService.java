@@ -22,12 +22,11 @@ public class PasteService {
         return pasteRepository.findTop10ByOrderByCreatedAtDesc()
                 .stream()
                 .map(p -> new PasteSummaryDto(
-                p.getId(),
-                p.getTitle(),
-                p.getSize(),
-                p.getSyntaxHighlight(),
-                p.getCreatedAt()
-        ))
+                        p.getId(),
+                        p.getTitle(),
+                        p.getSize(),
+                        p.getLanguage(),
+                        p.getCreatedAt()))
                 .toList();
     }
 
