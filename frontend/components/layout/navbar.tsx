@@ -24,6 +24,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import { UserDropdown } from './user-dropdown';
 
 interface MenuItem {
   title: string;
@@ -34,6 +35,7 @@ interface MenuItem {
 }
 
 interface NavbarProps {
+  isAuthenticated?: boolean;
   logo?: {
     url: string;
     src?: string;
@@ -54,6 +56,7 @@ interface NavbarProps {
 }
 
 const Navbar = ({
+  isAuthenticated,
   logo = {
     url: '/',
     alt: 'logo',
@@ -137,12 +140,18 @@ const Navbar = ({
             </div>
           </div>
           <div className="flex gap-2">
-            <Button asChild variant="outline" size="sm">
-              <a href={auth.login.url}>{auth.login.title}</a>
-            </Button>
-            <Button asChild size="sm">
-              <a href={auth.signup.url}>{auth.signup.title}</a>
-            </Button>
+            {!isAuthenticated && (
+              <>
+                <Button asChild variant="outline" size="sm">
+                  <a href={auth.login.url}>{auth.login.title}</a>
+                </Button>
+                <Button asChild size="sm">
+                  <a href={auth.signup.url}>{auth.signup.title}</a>
+                </Button>
+              </>
+            )}
+
+            {isAuthenticated && <UserDropdown />}
           </div>
         </nav>
 
@@ -183,12 +192,18 @@ const Navbar = ({
                   </Accordion>
 
                   <div className="flex flex-col gap-3">
-                    <Button asChild variant="outline">
-                      <a href={auth.login.url}>{auth.login.title}</a>
-                    </Button>
-                    <Button asChild>
-                      <a href={auth.signup.url}>{auth.signup.title}</a>
-                    </Button>
+                    {!isAuthenticated && (
+                      <>
+                        <Button asChild variant="outline">
+                          <a href={auth.login.url}>{auth.login.title}</a>
+                        </Button>
+
+                        <Button asChild>
+                          <a href={auth.signup.url}>{auth.signup.title}</a>
+                        </Button>
+                      </>
+                    )}
+                    {isAuthenticated && <UserDropdown />}
                   </div>
                 </div>
               </SheetContent>

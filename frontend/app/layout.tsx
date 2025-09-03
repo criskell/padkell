@@ -6,6 +6,7 @@ import { Navbar } from '@/components/layout/navbar';
 import { PasteList } from './components/paste-list';
 import './globals.css';
 import z from 'zod';
+import { isUserAuthenticated } from '@/lib/auth';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -24,17 +25,21 @@ export const metadata: Metadata = {
 
 z.config(z.locales.pt());
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isAuthenticated = await isUserAuthenticated();
+
+  console.log(isAuthenticated);
+
   return (
     <html lang="pt-br">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans bg-zinc-50 flex flex-col min-h-screen`}
       >
-        <Navbar />
+        <Navbar isAuthenticated={isAuthenticated} />
 
         <div className="container mx-auto py-8 px-8 bg-white grow">
           <div className="flex gap-8 flex-wrap justify-between">
