@@ -5,6 +5,9 @@ import { zfd } from 'zod-form-data';
 
 import { actionClient } from '@/lib/safe-action';
 import { returnValidationErrors } from 'next-safe-action';
+import type { AuthResponseDto } from '@/lib/dto/auth';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 const signInInputSchema = zfd.formData(
   z.object({
@@ -32,7 +35,14 @@ export const signInAction = actionClient
       });
     }
 
-    const body = await response.json();
+    const body: AuthResponseDto = await response.json();
 
-    console.log(body);
+    const cookieStore = await cookies();
+
+    cookieStore.set('@padkell:token', body.token, {
+      maxAge: 60 * 60 * 24 * 7, // 7d
+      path: '/',
+    });
+
+    redirect('/');
   });
