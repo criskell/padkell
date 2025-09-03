@@ -8,6 +8,7 @@ import { returnValidationErrors } from 'next-safe-action';
 import type { AuthResponseDto } from '@/lib/dto/auth';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { authenticateUser } from '@/lib/domain/auth/authenticate-user';
 
 const signInInputSchema = zfd.formData(
   z.object({
@@ -37,12 +38,6 @@ export const signInAction = actionClient
 
     const body: AuthResponseDto = await response.json();
 
-    const cookieStore = await cookies();
-
-    cookieStore.set('@padkell:token', body.token, {
-      maxAge: 60 * 60 * 24 * 7, // 7d
-      path: '/',
-    });
-
+    await authenticateUser(body);
     redirect('/');
   });

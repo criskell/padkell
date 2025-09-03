@@ -2,9 +2,12 @@
 
 import z from 'zod';
 import { zfd } from 'zod-form-data';
-
-import { actionClient } from '@/lib/safe-action';
+import { redirect } from 'next/navigation';
 import { returnValidationErrors } from 'next-safe-action';
+
+import type { AuthResponseDto } from '@/lib/dto/auth';
+import { actionClient } from '@/lib/safe-action';
+import { authenticateUser } from '@/lib/domain/auth/authenticate-user';
 
 const signUpInputSchema = zfd.formData(
   z.object({
@@ -32,4 +35,9 @@ export const signUpAction = actionClient
         },
       });
     }
+
+    const body: AuthResponseDto = await response.json();
+
+    await authenticateUser(body);
+    redirect('/');
   });
