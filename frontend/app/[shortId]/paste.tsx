@@ -42,7 +42,7 @@ export function Paste({ paste }: PasteProps) {
           <div className="flex gap-3 items-center text-zinc-600 text-xs">
             <span className="inline-flex gap-1 items-center">
               <CircleUserRoundIcon size={14} />
-              <span>ASHURA</span>
+              <span>{paste.author?.name || 'Anônimo'}</span>
               <MailIcon size={18} />
             </span>
 

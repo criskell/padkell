@@ -1,3 +1,5 @@
+import type { UserDTO } from '../user';
+
 export type PasteDTO = {
   id: string;
   shortId: string;
@@ -7,4 +9,5 @@ export type PasteDTO = {
   language: string;
   views: number;
   createdAt: string;
+  author?: UserDTO | null;
 };
