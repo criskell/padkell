@@ -49,12 +49,13 @@ public class AuthService {
 
     public AuthResponseDto signIn(SignInRequestDto request) {
         authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+                .authenticate(
+                        new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        String token = jwtUtil.generateToken(user);
+        String token = jwtUtil.generateToken(user.getId());
 
         return new AuthResponseDto(token);
     }
