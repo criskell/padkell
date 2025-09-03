@@ -40,4 +40,8 @@ public class PasteService {
     public Optional<Paste> findById(Long id) {
         return pasteRepository.findById(id);
     }
+
+    public Optional<Paste> findByShortId(String shortId) {
+        return pasteRepository.findByShortId(shortId);
+    }
 }

@@ -1,4 +1,4 @@
-export type GetPasteSummaryDto = {
+export type PasteDTO = {
   id: string;
   shortId: string;
   title: string;

@@ -1,7 +1,6 @@
 'use client';
 
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import {
   CalendarIcon,
   CircleUserRoundIcon,
@@ -15,17 +14,23 @@ import {
   TimerIcon,
 } from 'lucide-react';
 import Editor from '@monaco-editor/react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import Link from 'next/link';
 
-export default function PastePage() {
+import type { PasteDTO } from '@/lib/dto/pastes/get';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+
+export type PasteProps = {
+  paste: PasteDTO;
+};
+
+export function Paste({ paste }: PasteProps) {
   return (
     <main className="grow flex flex-col gap-2 max-w-full">
       <div className="flex gap-2 flex-wrap text-zinc-950">
         <div className="bg-zinc-100 rounded-lg size-10" />
 
         <div className="flex flex-col gap-1">
-          <p>Instant Profit Method</p>
+          <p>{paste.title}</p>
 
           <div className="flex gap-3 items-center text-zinc-600 text-xs">
             <span className="inline-flex gap-1 items-center">
@@ -64,7 +69,7 @@ export default function PastePage() {
 
       <div>
         <div className="flex items-center text-zinc-700 bg-zinc-100 px-6 py-4 gap-2 rounded-t-lg text-xs">
-          <Badge variant="outline">JavaScript</Badge>
+          <Badge variant="outline">{paste.language}</Badge>
           <span>0.32KB</span>
           <span>|</span>
           <span>None</span>
@@ -92,7 +97,7 @@ export default function PastePage() {
           <Editor
             height="50vh"
             defaultLanguage="text"
-            defaultValue="oiqweoowiqenjiowqnen"
+            defaultValue={paste.body}
             options={{
               minimap: {
                 enabled: false,

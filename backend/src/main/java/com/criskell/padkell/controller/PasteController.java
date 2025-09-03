@@ -32,9 +32,9 @@ class PasteController {
         return pasteService.findLatestSummaries();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Paste> getById(@PathVariable Long id) {
-        return pasteService.findById(id)
+    @GetMapping("/{shortId}")
+    public ResponseEntity<Paste> getByShortId(@PathVariable String shortId) {
+        return pasteService.findByShortId(shortId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
