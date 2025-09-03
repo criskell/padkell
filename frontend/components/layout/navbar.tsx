@@ -106,8 +106,8 @@ const Navbar = ({
     },
   ],
   auth = {
-    login: { title: 'Entrar', url: '#' },
-    signup: { title: 'Criar conta', url: '#' },
+    login: { title: 'Entrar', url: '/sign-in' },
+    signup: { title: 'Criar conta', url: '/sign-up' },
   },
 }: NavbarProps) => {
   return (
