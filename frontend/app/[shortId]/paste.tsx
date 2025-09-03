@@ -16,14 +16,21 @@ import {
 import Editor from '@monaco-editor/react';
 import Link from 'next/link';
 
+import { dayjs } from '@/lib/dayjs';
 import type { PasteDTO } from '@/lib/dto/pastes/get';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { formatBytes } from '@/lib/utils/format-bytes';
 
 export type PasteProps = {
   paste: PasteDTO;
 };
 
 export function Paste({ paste }: PasteProps) {
+  const formattedCreatedAtDate = dayjs(paste.createdAt).format(
+    'DD [de] MMMM [de] YYYY, HH:mm'
+  );
+  const formattedSize = formatBytes(paste.size);
+
   return (
     <main className="grow flex flex-col gap-2 max-w-full">
       <div className="flex gap-2 flex-wrap text-zinc-950">
@@ -41,7 +48,7 @@ export function Paste({ paste }: PasteProps) {
 
             <span className="inline-flex gap-1 items-center">
               <CalendarIcon size={14} />
-              <span>AUG 30TH, 2025</span>
+              <span>{formattedCreatedAtDate}</span>
             </span>
 
             <span className="inline-flex gap-1 items-center">
@@ -70,7 +77,7 @@ export function Paste({ paste }: PasteProps) {
       <div>
         <div className="flex items-center text-zinc-700 bg-zinc-100 px-6 py-4 gap-2 rounded-t-lg text-xs">
           <Badge variant="outline">{paste.language}</Badge>
-          <span>0.32KB</span>
+          <span>{formattedSize}</span>
           <span>|</span>
           <span>None</span>
           <span>|</span>
@@ -83,10 +90,14 @@ export function Paste({ paste }: PasteProps) {
             <ThumbsDownIcon size={20} />
           </Badge>
 
-          <Badge variant="outline" className="ml-auto">
-            raw
-          </Badge>
-          <Badge variant="outline">download</Badge>
+          <Link href={`/raw/${paste.shortId}`}>
+            <Badge variant="outline" className="ml-auto">
+              raw
+            </Badge>
+          </Link>
+          <Link href={`/download/${paste.shortId}`}>
+            <Badge variant="outline">download</Badge>
+          </Link>
           <Badge variant="outline">clone</Badge>
           <Badge variant="outline">embed</Badge>
           <Badge variant="outline">print</Badge>
@@ -96,7 +107,7 @@ export function Paste({ paste }: PasteProps) {
         <div className="border border-zinc-100 rounded-lg rounded-t-none p-1">
           <Editor
             height="50vh"
-            defaultLanguage="text"
+            defaultLanguage={paste.language}
             defaultValue={paste.body}
             options={{
               minimap: {
