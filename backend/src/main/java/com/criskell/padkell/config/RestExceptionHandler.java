@@ -2,10 +2,13 @@ package com.criskell.padkell.config;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.parsing.Problem;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -41,6 +44,16 @@ public class RestExceptionHandler {
     @ExceptionHandler(ApiException.class)
     public ProblemDetail handleApiException(ApiException ex) {
         return ex.getBody();
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ProblemDetail handleBadCredentialsException() {
+        var problemDetail = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED);
+
+        problemDetail.setDetail("Invalid credentials. Verify your email and password.");
+        problemDetail.setType(ErrorCode.INVALID_CREDENTIALS.getType());
+
+        return problemDetail;
     }
 
     private record InvalidParam(String name, String reason) {

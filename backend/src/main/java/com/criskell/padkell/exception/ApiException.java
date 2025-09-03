@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.ErrorResponseException;
 
+import com.criskell.padkell.config.ProblemDetailType;
+
 public abstract class ApiException extends ErrorResponseException {
     protected ApiException(HttpStatus status, String code, String title) {
         this(status, code, title, null);
@@ -24,7 +26,7 @@ public abstract class ApiException extends ErrorResponseException {
             problemDetail.setDetail(detail);
         }
 
-        problemDetail.setType(create("https://pad.criskell.com/problems/" + code.toLowerCase().replace("_", "-")));
+        problemDetail.setType(ProblemDetailType.forCode(code));
 
         return problemDetail;
     }
