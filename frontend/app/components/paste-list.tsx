@@ -11,15 +11,7 @@ export const PasteList = async () => {
 
       <ul>
         {pastes.map((paste) => (
-          <PasteListItem
-            key={paste.id}
-            paste={{
-              ...paste,
-              language: paste.language,
-              createdAt: paste.createdAt,
-              size: paste.size,
-            }}
-          />
+          <PasteListItem key={paste.id} paste={paste} />
         ))}
       </ul>
     </aside>
