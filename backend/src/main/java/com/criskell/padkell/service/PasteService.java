@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.criskell.padkell.dto.PasteSummaryDto;
 import com.criskell.padkell.entity.Paste;
 import com.criskell.padkell.repository.PasteRepository;
+import com.criskell.padkell.util.RandomIdGenerator;
 
 @Service
 public class PasteService {
@@ -23,6 +24,7 @@ public class PasteService {
                 .stream()
                 .map(p -> new PasteSummaryDto(
                         p.getId(),
+                        p.getShortId(),
                         p.getTitle(),
                         p.getSize(),
                         p.getLanguage(),
@@ -31,6 +33,7 @@ public class PasteService {
     }
 
     public Paste save(Paste paste) {
+        paste.setShortId(RandomIdGenerator.generateShortId(Paste.SHORT_ID_LENGTH));
         return pasteRepository.save(paste);
     }
 

@@ -1,5 +1,6 @@
 export type GetPasteSummaryDto = {
   id: string;
+  shortId: string;
   title: string;
   body: string;
   size: number;

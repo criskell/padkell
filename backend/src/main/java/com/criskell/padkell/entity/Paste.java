@@ -17,12 +17,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Paste {
+    public static final int SHORT_ID_LENGTH = 8;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
+
+    @Column(unique = true)
+    private String shortId;
 
     @Lob
     private String body;

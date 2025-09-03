@@ -1,9 +1,11 @@
 import { dayjs } from '@/lib/dayjs';
 import { formatBytes } from '@/lib/utils/format-bytes';
 import { GlobeIcon } from 'lucide-react';
+import Link from 'next/link';
 
 export type PasteListItemProps = {
   paste: {
+    shortId: string;
     title: string;
     language: string;
     createdAt: string;
@@ -20,7 +22,9 @@ export const PasteListItem = ({ paste }: PasteListItemProps) => {
       <GlobeIcon size={16} />
 
       <div>
-        <p className="text-blue-900">{paste.title}</p>
+        <Link className="text-blue-900" href={`/${paste.shortId}`}>
+          {paste.title}
+        </Link>
         <p className="text-zinc-500">
           {paste.language || 'plaintext'} | {formattedRelativeCreatedDate} |{' '}
           {formattedSize}
