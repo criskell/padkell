@@ -10,6 +10,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.criskell.padkell.exception.ApiException;
+
 @RestControllerAdvice
 public class RestExceptionHandler {
 
@@ -31,10 +33,14 @@ public class RestExceptionHandler {
     public ResponseEntity<Map<String, String>> handleMissingBody(HttpMessageNotReadableException ex) {
         Map<String, String> error = Map.of(
                 "error", "Bad request",
-                "message", "Request body is required"
-        );
+                "message", "Request body is required");
 
         return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(ApiException.class)
+    public ProblemDetail handleApiException(ApiException ex) {
+        return ex.getBody();
     }
 
     private record InvalidParam(String name, String reason) {
