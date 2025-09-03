@@ -1,5 +1,6 @@
 package com.criskell.padkell.scheduler;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.data.redis.core.RedisTemplate;
@@ -8,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.criskell.padkell.entity.Paste;
 import com.criskell.padkell.repository.PasteRepository;
 
 @Component
@@ -30,11 +32,21 @@ public class PasteViewScheduler {
 
         for (String key : keys) {
             String shortId = key.replace("paste:views:", "");
-            Long increment = redisTemplate.opsForValue().getAndDelete(key);
+            Long cachedViews = redisTemplate.opsForValue().getAndDelete(key);
 
-            if (increment != null && increment > 0) {
-                pasteRepository.incrementViews(shortId, increment);
+            if (cachedViews == null || cachedViews <= 0) {
+                continue;
             }
+
+            Optional<Paste> optionalPaste = pasteRepository.findByShortId(shortId);
+
+            if (optionalPaste.isEmpty()) {
+                continue;
+            }
+
+            Paste paste = optionalPaste.get();
+            paste.setViews(cachedViews);
+            pasteRepository.save(paste);
         }
     }
 }
