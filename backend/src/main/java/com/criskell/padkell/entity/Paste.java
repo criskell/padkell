@@ -23,21 +23,27 @@ public class Paste {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String shortId;
 
+    @Column(nullable = false)
     @Lob
     private String body;
 
+    @Column(nullable = false)
     private Long size;
 
+    @Column(nullable = false)
     private String language = "plaintext";
 
     private LocalDateTime expiresAt;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    private Long views = 0L;
 
     public void setBody(String body) {
         this.body = body;

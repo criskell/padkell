@@ -8,7 +8,9 @@ type PastePage = {
 };
 
 export default async function PastePage({ params }: PastePage) {
-  const paste = await getPasteByShortId(params.shortId);
+  const { shortId } = await params;
+
+  const paste = await getPasteByShortId(shortId);
 
   return <Paste paste={paste} />;
 }

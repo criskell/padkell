@@ -10,13 +10,17 @@ import com.criskell.padkell.entity.Paste;
 import com.criskell.padkell.repository.PasteRepository;
 import com.criskell.padkell.util.RandomIdGenerator;
 
+import jakarta.persistence.EntityManager;
+
 @Service
 public class PasteService {
 
     private final PasteRepository pasteRepository;
+    private final PasteViewService pasteViewService;
 
-    public PasteService(PasteRepository pasteRepository) {
+    public PasteService(PasteRepository pasteRepository, PasteViewService pasteViewService) {
         this.pasteRepository = pasteRepository;
+        this.pasteViewService = pasteViewService;
     }
 
     public List<PasteSummaryDto> findLatestSummaries() {
@@ -42,6 +46,8 @@ public class PasteService {
     }
 
     public Optional<Paste> findByShortId(String shortId) {
+        pasteViewService.incrementView(shortId);
+
         return pasteRepository.findByShortId(shortId);
     }
 }
