@@ -2,11 +2,8 @@ package com.criskell.padkell.security;
 
 import java.util.Date;
 
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
-import com.criskell.padkell.entity.User;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

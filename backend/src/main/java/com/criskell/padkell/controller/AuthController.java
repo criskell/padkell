@@ -6,6 +6,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.criskell.padkell.dto.SignInRequestDto;
+import com.criskell.padkell.dto.SignUpRequestDto;
+import com.criskell.padkell.service.AuthService;
+
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -16,12 +22,12 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@RequestBody SignUpRequest) {
+    public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequestDto request) {
         return ResponseEntity.ok(authService.signUp(request));
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<?> signIn(@RequestBody AuthRequest request) {
-        return ResponseEntity.ok(authService.signUp(request));
+    public ResponseEntity<?> signIn(@Valid @RequestBody SignInRequestDto request) {
+        return ResponseEntity.ok(authService.signIn(request));
     }
 }
