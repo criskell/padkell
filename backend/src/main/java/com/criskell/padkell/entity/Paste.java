@@ -45,6 +45,9 @@ public class Paste {
     @ManyToOne
     private Category category;
 
+    @ManyToOne
+    private User author;
+
     private LocalDateTime expiresAt;
 
     private LocalDateTime createdAt = LocalDateTime.now();
