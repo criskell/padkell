@@ -76,7 +76,7 @@ export function Paste({ paste }: PasteProps) {
 
       <div>
         <div className="flex items-center text-zinc-700 bg-zinc-100 px-6 py-4 gap-2 rounded-t-lg text-xs">
-          <Badge variant="outline">{paste.language}</Badge>
+          <Badge variant="outline">{paste.language || 'plaintext'}</Badge>
           <span>{formattedSize}</span>
           <span>|</span>
           <span>None</span>
