@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,11 +40,14 @@ public class Paste {
     @Column(nullable = false)
     private String language = "plaintext";
 
+    private Long views = 0L;
+
+    @ManyToOne
+    private Category category;
+
     private LocalDateTime expiresAt;
 
     private LocalDateTime createdAt = LocalDateTime.now();
-
-    private Long views = 0L;
 
     public void setBody(String body) {
         this.body = body;
