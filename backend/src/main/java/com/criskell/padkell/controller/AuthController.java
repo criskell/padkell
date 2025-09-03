@@ -1,5 +1,6 @@
 package com.criskell.padkell.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +23,10 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequestDto request) {
-        return ResponseEntity.ok(authService.signUp(request));
+    public ResponseEntity<Void> signUp(@Valid @RequestBody SignUpRequestDto request) {
+        authService.signUp(request);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/sign-in")

@@ -1,5 +1,6 @@
 package com.criskell.padkell.service;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,6 +10,7 @@ import com.criskell.padkell.dto.AuthResponseDto;
 import com.criskell.padkell.dto.SignInRequestDto;
 import com.criskell.padkell.dto.SignUpRequestDto;
 import com.criskell.padkell.entity.User;
+import com.criskell.padkell.exception.EmailAlreadyExistsException;
 import com.criskell.padkell.repository.UserRepository;
 import com.criskell.padkell.security.JwtUtil;
 
@@ -30,20 +32,19 @@ public class AuthService {
         this.jwtUtil = jwtUtil;
     }
 
-    public String signUp(SignUpRequestDto request) {
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("E-mail já cadastrado");
-        }
-
+    public User signUp(SignUpRequestDto request) {
         User user = new User();
 
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
 
-        userRepository.save(user);
-
-        return "Usuário cadastrado com sucesso.";
+        try {
+            userRepository.save(user);
+            return user;
+        } catch (DataIntegrityViolationException e) {
+            throw new EmailAlreadyExistsException(request.getEmail());
+        }
     }
 
     public AuthResponseDto signIn(SignInRequestDto request) {
