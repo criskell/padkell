@@ -2,8 +2,6 @@
 
 import z from 'zod';
 
-import { zfd } from 'zod-form-data';
-
 import { actionClient } from '@/lib/safe-action';
 import { revalidateTag } from 'next/cache';
 import { LIST_PASTES_TAG } from '@/lib/queries/paste/list-paste-summaries';

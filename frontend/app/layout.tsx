@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/navbar';
 
 import { PasteList } from './components/paste-list';
 import './globals.css';
+import z from 'zod';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -20,6 +21,8 @@ export const metadata: Metadata = {
   title: 'padkell',
   description: 'Compartilhe anotações com seus amigos!',
 };
+
+z.config(z.locales.pt());
 
 export default function RootLayout({
   children,

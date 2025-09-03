@@ -6,5 +6,5 @@ export const PageTitle = ({
   className,
 }: {
   children: ReactNode;
-  className: string;
+  className?: string;
 }) => <h2 className={cn('text-lg', className)}>{children}</h2>;
