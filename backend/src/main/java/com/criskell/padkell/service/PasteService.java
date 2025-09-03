@@ -10,8 +10,6 @@ import com.criskell.padkell.entity.Paste;
 import com.criskell.padkell.repository.PasteRepository;
 import com.criskell.padkell.util.RandomIdGenerator;
 
-import jakarta.persistence.EntityManager;
-
 @Service
 public class PasteService {
 
