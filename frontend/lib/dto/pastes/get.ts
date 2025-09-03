@@ -5,5 +5,6 @@ export type PasteDTO = {
   body: string;
   size: number;
   language: string;
+  views: number;
   createdAt: string;
 };

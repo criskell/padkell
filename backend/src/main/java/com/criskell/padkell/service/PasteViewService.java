@@ -21,9 +21,9 @@ public class PasteViewService {
         String key = "paste:views:" + shortId;
 
         if (redisTemplate != null) {
-            Long currentValue = redisTemplate.opsForValue().get(key);
+            Long value = redisTemplate.opsForValue().get(key);
 
-            if (currentValue == null) {
+            if (value == null) {
                 redisTemplate.opsForValue().setIfAbsent(key,
                         pasteRepository.findByShortId(shortId).map(Paste::getViews).orElse(0L));
             }
@@ -37,7 +37,7 @@ public class PasteViewService {
     }
 
     public Long getViews(String shortId) {
-        if (redisTemplate == null) {
+        if (redisTemplate != null) {
             Long views = redisTemplate.opsForValue().get("paste:views:" + shortId);
 
             if (views != null) {

@@ -53,7 +53,7 @@ export function Paste({ paste }: PasteProps) {
 
             <span className="inline-flex gap-1 items-center">
               <EyeIcon size={14} />
-              <span>10</span>
+              <span>{paste.views}</span>
             </span>
 
             <span className="inline-flex gap-1 items-center">

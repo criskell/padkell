@@ -48,6 +48,9 @@ public class PasteService {
     public Optional<Paste> findByShortId(String shortId) {
         pasteViewService.incrementView(shortId);
 
-        return pasteRepository.findByShortId(shortId);
+        return pasteRepository.findByShortId(shortId).map((paste) -> {
+            paste.setViews(pasteViewService.getViews(shortId));
+            return paste;
+        });
     }
 }
