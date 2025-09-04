@@ -1,7 +1,7 @@
 package com.criskell.padkell.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +16,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/")
+    @GetMapping
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(categoryService.findAll());
     }

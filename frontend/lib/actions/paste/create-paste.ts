@@ -11,6 +11,7 @@ const createPasteInputSchema = z.object({
   title: z.string(),
   language: z.string().default('plaintext').nullish(),
   body: z.string().nonempty(),
+  categoryId: z.string().nonempty(),
 });
 
 export const createPasteAction = actionClient

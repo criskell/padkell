@@ -81,6 +81,7 @@ export const CreatePasteForm = ({
 
     return execute({
       title: formData.get('title') as string,
+      categoryId: formData.get('categoryId') as string,
       body: editorRef.current.getValue(),
       language,
     });
@@ -152,6 +153,12 @@ export const CreatePasteForm = ({
           </Select>
         </Label>
 
+        <p className="text-destructive text-sm w-full">
+          {result.validationErrors?.fieldErrors.title}
+        </p>
+      </div>
+
+      <div>
         <Label>
           Categoria{' '}
           <Select name="categoryId">
@@ -167,9 +174,9 @@ export const CreatePasteForm = ({
             </SelectContent>
           </Select>
         </Label>
-
+        
         <p className="text-destructive text-sm w-full">
-          {result.validationErrors?.fieldErrors.title}
+          {result.validationErrors?.fieldErrors.categoryId}
         </p>
       </div>
 

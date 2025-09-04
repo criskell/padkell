@@ -14,7 +14,7 @@ export const UserDropdown = async () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center gap-3 outline-none">
+      <DropdownMenuTrigger className="flex items-center gap-3 outline-none cursor-pointer">
         <div className="flex flex-col items-end">
           <span className="text-sm font-medium">{user.name}</span>
         </div>
