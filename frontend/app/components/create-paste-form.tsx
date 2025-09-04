@@ -7,7 +7,7 @@ import Editor, { type OnChange, type OnMount } from '@monaco-editor/react';
 import '@tensorflow/tfjs-backend-webgl';
 import { editor } from 'monaco-editor';
 
-import { use, useEffect, useRef, useState } from 'react';
+import { FormEvent, use, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { createPasteAction } from '@/lib/actions/paste/create-paste';
@@ -76,8 +76,12 @@ export const CreatePasteForm = ({
     editorRef.current = editor;
   };
 
-  const submitPaste = (formData: FormData) => {
+  const handleSubmitPaste = (event: FormEvent<HTMLFormElement>) => {
     if (!editorRef.current) return;
+
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
 
     return execute({
       title: formData.get('title') as string,
@@ -100,7 +104,7 @@ export const CreatePasteForm = ({
   }, []);
 
   return (
-    <form action={submitPaste} className="space-y-8">
+    <form onSubmit={handleSubmitPaste} className="space-y-8">
       <div>
         <div className="border border-zinc-100 rounded-lg p-2">
           <Editor

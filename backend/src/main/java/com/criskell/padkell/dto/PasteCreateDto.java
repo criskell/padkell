@@ -7,6 +7,6 @@ public record PasteCreateDto(
         @NotBlank() @Size(max = 255) String title,
         @NotBlank() String body,
         @NotBlank() String language,
-        @NotBlank() Long categoryId) {
+        Long categoryId) {
 
 }
