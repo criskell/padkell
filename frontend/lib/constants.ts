@@ -1,1 +1,1 @@
-export const AUTH_TOKEN = '@padkell:token';
+export const AUTH_COOKIE = '@padkell:token';

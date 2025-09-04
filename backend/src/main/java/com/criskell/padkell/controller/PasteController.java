@@ -17,6 +17,7 @@ import com.criskell.padkell.dto.PasteDto;
 import com.criskell.padkell.dto.PasteSummaryDto;
 import com.criskell.padkell.entity.Paste;
 import com.criskell.padkell.entity.User;
+import com.criskell.padkell.service.CategoryService;
 import com.criskell.padkell.service.PasteService;
 
 import jakarta.validation.Valid;
@@ -26,9 +27,11 @@ import jakarta.validation.Valid;
 class PasteController {
 
     private final PasteService pasteService;
+    private final CategoryService categoryService;
 
-    public PasteController(PasteService pasteService) {
+    public PasteController(PasteService pasteService, CategoryService categoryService) {
         this.pasteService = pasteService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping
@@ -47,12 +50,14 @@ class PasteController {
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody PasteCreateDto pasteDto,
             @AuthenticationPrincipal User user) {
-        Paste paste = new Paste();
+        var category = categoryService.findById(pasteDto.categoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+        var paste = new Paste();
 
         paste.setBody(pasteDto.body());
         paste.setTitle(pasteDto.title());
         paste.setLanguage(pasteDto.language());
         paste.setAuthor(user);
+        paste.setCategory(category);
 
         pasteService.save(paste);
 

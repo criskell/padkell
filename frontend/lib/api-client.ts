@@ -2,6 +2,7 @@ import ky from 'ky';
 import { CookiesFn, getCookie } from 'cookies-next';
 
 import { env } from './env';
+import { AUTH_COOKIE } from './constants';
 
 export const api = ky.create({
   prefixUrl: env.NEXT_PUBLIC_API_URL,
@@ -17,7 +18,7 @@ export const api = ky.create({
           cookieStore = serverCookies;
         }
 
-        const token = await getCookie('@padkell:token', {
+        const token = await getCookie(AUTH_COOKIE, {
           cookies: cookieStore,
         });
 

@@ -2,18 +2,18 @@ import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 
 import { getAuthenticatedUser } from './queries/auth/get-authenticated-user';
-import { AUTH_TOKEN } from './constants';
+import { AUTH_COOKIE } from './constants';
 
 export const getUserToken = async () => {
   const cookieStore = await cookies();
 
-  return cookieStore.get(AUTH_TOKEN)?.value;
+  return cookieStore.get(AUTH_COOKIE)?.value;
 };
 
 export const signOut = async () => {
   const cookieStore = await cookies();
 
-  cookieStore.delete(AUTH_TOKEN);
+  cookieStore.delete(AUTH_COOKIE);
 };
 
 export const isUserAuthenticated = async () => {
