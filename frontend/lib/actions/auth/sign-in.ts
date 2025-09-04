@@ -38,6 +38,14 @@ export const signInAction = actionClient
 
     const body: AuthResponseDto = await response.json();
 
+    if (!body.token) {
+      returnValidationErrors(signInInputSchema, {
+        email: {
+          _errors: ['Erro interno. Tente novamente mais tarde.'],
+        },
+      });
+    }
+
     await authenticateUser(body);
     redirect('/');
   });
