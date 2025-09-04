@@ -1,3 +1,4 @@
+import type { CategoryDTO } from '../category';
 import type { UserDTO } from '../user';
 
 export type PasteDTO = {
@@ -9,5 +10,6 @@ export type PasteDTO = {
   language: string;
   views: number;
   createdAt: string;
+  category?: CategoryDTO;
   author?: UserDTO | null;
 };

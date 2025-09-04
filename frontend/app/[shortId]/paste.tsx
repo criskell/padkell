@@ -79,7 +79,7 @@ export function Paste({ paste }: PasteProps) {
           <Badge variant="outline">{paste.language || 'plaintext'}</Badge>
           <span>{formattedSize}</span>
           <span>|</span>
-          <span>None</span>
+          <span>{paste.category?.name || 'Sem categoria'}</span>
           <span>|</span>
 
           <Badge variant="outline">
