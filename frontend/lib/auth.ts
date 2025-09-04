@@ -1,20 +1,19 @@
 import { redirect } from 'next/navigation';
-import { getCookie, type CookiesFn } from 'cookies-next';
+import { cookies } from 'next/headers';
 
 import { getAuthenticatedUser } from './queries/auth/get-authenticated-user';
+import { AUTH_TOKEN } from './constants';
 
 export const getUserToken = async () => {
-  let cookieStore: CookiesFn | undefined;
+  const cookieStore = await cookies();
 
-  if (typeof window === 'undefined') {
-    const { cookies: serverCookies } = await import('next/headers');
+  return cookieStore.get(AUTH_TOKEN)?.value;
+};
 
-    cookieStore = serverCookies;
-  }
+export const signOut = async () => {
+  const cookieStore = await cookies();
 
-  return await getCookie('@padkell:token', {
-    cookies: cookieStore,
-  });
+  cookieStore.delete(AUTH_TOKEN);
 };
 
 export const isUserAuthenticated = async () => {
@@ -33,10 +32,8 @@ export const auth = async () => {
 
     return user;
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 
-  console.log('oiiiiiiii');
-
-  // redirect('/api/auth/sign-out');
+  redirect('/api/auth/sign-out');
 };

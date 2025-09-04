@@ -25,6 +25,10 @@ public class PasteViewScheduler {
     @Scheduled(fixedRate = 60000) // 60s
     @Transactional
     public void persistViews() {
+        if (redisTemplate == null) {
+            return;
+        }
+
         Set<String> keys = redisTemplate.keys("paste:views:*");
 
         if (keys == null)

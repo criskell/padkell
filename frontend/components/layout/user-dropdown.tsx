@@ -2,12 +2,9 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Avatar } from '../ui/avatar';
-import { AvatarFallback } from '@radix-ui/react-avatar';
+import { Avatar, AvatarFallback } from '../ui/avatar';
 import { getInitials } from '@/lib/utils/get-initials';
 import { LogOutIcon } from 'lucide-react';
 import { auth } from '@/lib/auth';

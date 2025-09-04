@@ -1,8 +1,10 @@
 import ky from 'ky';
 import { CookiesFn, getCookie } from 'cookies-next';
 
+import { env } from './env';
+
 export const api = ky.create({
-  prefixUrl: process.env.NEXT_PUBLIC_API_URL as string,
+  prefixUrl: env.NEXT_PUBLIC_API_URL,
 
   hooks: {
     beforeRequest: [

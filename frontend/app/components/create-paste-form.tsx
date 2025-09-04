@@ -7,7 +7,7 @@ import Editor, { type OnChange, type OnMount } from '@monaco-editor/react';
 import '@tensorflow/tfjs-backend-webgl';
 import { editor } from 'monaco-editor';
 
-import { useEffect, useRef, useState } from 'react';
+import { use, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { createPasteAction } from '@/lib/actions/paste/create-paste';
@@ -21,8 +21,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { CategoryDTO } from '@/lib/dto/category';
 
-export const CreatePasteForm = () => {
+export type CreatePasteFormProps = {
+  categoriesPromise: Promise<CategoryDTO[]>;
+};
+
+export const CreatePasteForm = ({
+  categoriesPromise
+}: CreatePasteFormProps) => {
+  const categories = use(categoriesPromise);
+
   const { execute, result } = useAction(createPasteAction);
 
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
@@ -137,6 +146,22 @@ export const CreatePasteForm = () => {
               {languageIds.map((language) => (
                 <SelectItem value={language} key={language}>
                   {language}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </Label>
+
+        <Label>
+          Categoria{' '}
+          <Select name="categoryId">
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Categoria" />
+            </SelectTrigger>
+            <SelectContent>
+              {categories.map((category) => (
+                <SelectItem value={category.id.toString()} key={category.id}>
+                  {category.name}
                 </SelectItem>
               ))}
             </SelectContent>

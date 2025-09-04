@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 public record PasteCreateDto(
         @NotBlank() @Size(max = 255) String title,
         @NotBlank() String body,
-        @NotBlank() String language) {
+        @NotBlank() String language,
+        @NotBlank() String categoryId) {
 
 }
