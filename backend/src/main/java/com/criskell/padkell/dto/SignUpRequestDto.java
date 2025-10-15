@@ -12,15 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SignUpRequestDto {
-    @NotBlank
-    @Length(min = 3)
+    @NotBlank(message = "{signUp.name.notBlank}")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "{signUp.email.notBlank}")
     @Email
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "{signUp.password.notBlank}")
     @Length(min = 8)
     private String password;
 }
