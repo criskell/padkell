@@ -16,10 +16,10 @@ public class SignUpRequestDto {
     private String name;
 
     @NotBlank(message = "{signUp.email.notBlank}")
-    @Email
+    @Email(message = "{signUp.email.email}")
     private String email;
 
     @NotBlank(message = "{signUp.password.notBlank}")
-    @Length(min = 8)
+    @Length(min = 8, message = "{signUp.password.length}")
     private String password;
 }
