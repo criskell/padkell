@@ -32,12 +32,11 @@ export default async function RootLayout({
 }>) {
   const isAuthenticated = await isUserAuthenticated();
 
-  console.log(isAuthenticated);
-
   return (
     <html lang="pt-br">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans bg-zinc-50 flex flex-col min-h-screen`}
+        suppressHydrationWarning
       >
         <Navbar isAuthenticated={isAuthenticated} />
 

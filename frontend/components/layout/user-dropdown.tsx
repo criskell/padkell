@@ -4,7 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Avatar, AvatarFallback } from '../ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { getInitials } from '@/lib/utils/get-initials';
 import { LogOutIcon } from 'lucide-react';
 import { auth } from '@/lib/auth';
@@ -16,9 +16,15 @@ export const UserDropdown = async () => {
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-3 outline-none cursor-pointer">
         <div className="flex flex-col items-end">
-          <span className="text-sm font-medium">{user.name}</span>
+          <span className="text-sm font-medium truncate">{user.name}</span>
         </div>
         <Avatar>
+          {user.providerPictureUrl && (
+            <AvatarImage
+              src={user.providerPictureUrl}
+              alt="Imagem do usuário"
+            />
+          )}
           <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>

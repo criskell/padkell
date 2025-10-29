@@ -31,8 +31,15 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String password;
+
+    // Authentication provider. (google, github, etc.).
+    private String provider;
+
+    // External ID in external authentication provider.
+    private String providerExternalId;
+
+    private String providerPictureUrl;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { signInAction } from '@/lib/actions/auth/sign-in';
+import Link from 'next/link';
+import { env } from '@/lib/env';
 
 export const SignInForm = () => {
   const { execute, result } = useAction(signInAction);
@@ -39,9 +41,22 @@ export const SignInForm = () => {
         </p>
       </div>
 
-      <Button type="submit" className="ml-auto cursor-pointer">
-        Autenticar
-      </Button>
+      <div className="flex gap-2">
+        <Button
+          type="submit"
+          className="ml-auto cursor-pointer"
+          variant="ghost"
+          asChild
+        >
+          <Link href={`${env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`}>
+            Fazer login com Google
+          </Link>
+        </Button>
+
+        <Button type="submit" className="cursor-pointer">
+          Autenticar
+        </Button>
+      </div>
     </form>
   );
 };
