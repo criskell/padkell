@@ -35,7 +35,15 @@ public class AuthController {
 
         var signInDto = new SignInRequestDto(request.getEmail(), request.getPassword());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", messageService.getLocalizedMessage("auth.signUp.success"), "data", authService.signIn(signInDto)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            Map.of(
+                "message",
+                messageService.getLocalizedMessage("auth.signUp.success"),
+                
+                "data",
+                authService.signIn(signInDto)
+            )
+        );
     }
 
     @PostMapping("/sign-in")

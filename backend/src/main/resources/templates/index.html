@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Padkell</title>
+<html xmlns:th="https://www.thymeleaf.org">
+  <head th:replace="layouts/app :: head">
+    <title>Home</title>
   </head>
-  <body>
-    <p th:text="#{auth.signUp.success}"></p>
+  <body th:replace="layouts/app :: body-start('')">
+    <div th:replace="layouts/app :: header"></div>
+
+    <section>
+      <h2>Bem-vindo!</h2>
+    </section>
   </body>
 </html>
