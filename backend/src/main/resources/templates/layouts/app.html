@@ -24,24 +24,24 @@
       const htmlElement = document.documentElement;
 
       const __FRANKEN__ = JSON.parse(
-        localStorage.getItem('__FRANKEN__') || '{}'
+        localStorage.getItem("__FRANKEN__") || "{}"
       );
 
       if (
-        __FRANKEN__.mode === 'dark' ||
+        __FRANKEN__.mode === "dark" ||
         (!__FRANKEN__.mode &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches)
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
       ) {
-        htmlElement.classList.add('dark');
+        htmlElement.classList.add("dark");
       } else {
         // htmlElement.classList.remove('dark');
       }
 
-      htmlElement.classList.add(__FRANKEN__.theme || 'uk-theme-emerald');
-      htmlElement.classList.add(__FRANKEN__.radii || 'uk-radii-md');
-      htmlElement.classList.add(__FRANKEN__.shadows || 'uk-shadows-sm');
-      htmlElement.classList.add(__FRANKEN__.font || 'uk-font-sm');
-      htmlElement.classList.add(__FRANKEN__.chart || 'uk-chart-default');
+      htmlElement.classList.add(__FRANKEN__.theme || "uk-theme-emerald");
+      htmlElement.classList.add(__FRANKEN__.radii || "uk-radii-md");
+      htmlElement.classList.add(__FRANKEN__.shadows || "uk-shadows-sm");
+      htmlElement.classList.add(__FRANKEN__.font || "uk-font-sm");
+      htmlElement.classList.add(__FRANKEN__.chart || "uk-chart-default");
     </script>
   </head>
   <body>
@@ -76,6 +76,24 @@
         </div>
         <a class="px-3 py-1" href="#" th:text="#{nav.tools}"></a>
         <a class="px-3 py-1" href="#" th:text="#{nav.blog}"></a>
+
+        <div>
+          <a class="py-1 px-3 flex" href="#" th:text="#{header.language.title}">
+          </a>
+
+          <div
+            class="uk-drop uk-dropdown min-w-52"
+            data-uk-dropdown="mode: click; animation: uk-anmt-slide-top-sm"
+          >
+            <ul class="uk-nav uk-dropdown-nav">
+              <li>
+                <a href="?lang=pt_BR" th:text="#{language.portuguese}"></a>
+              </li>
+              <li><a href="?lang=en_US" th:text="#{language.english}"></a></li>
+              <li><a href="?lang=he" th:text="#{language.hebraic}"></a></li>
+            </ul>
+          </div>
+        </div>
       </nav>
     </div>
   </body>
