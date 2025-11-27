@@ -1,7 +1,5 @@
 package com.criskell.padkell.exception;
 
-import static java.net.URI.create;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.ErrorResponseException;

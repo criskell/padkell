@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import com.criskell.padkell.entity.Category;
 import com.criskell.padkell.entity.Paste;
-import com.criskell.padkell.entity.User;
 
 public record PasteDto(
         Long id,
