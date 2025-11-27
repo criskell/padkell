@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" class="dark">
   <head th:fragment="head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,7 +34,7 @@
       ) {
         htmlElement.classList.add('dark');
       } else {
-        htmlElement.classList.remove('dark');
+        // htmlElement.classList.remove('dark');
       }
 
       htmlElement.classList.add(__FRANKEN__.theme || 'uk-theme-emerald');
@@ -44,41 +44,38 @@
       htmlElement.classList.add(__FRANKEN__.chart || 'uk-chart-default');
     </script>
   </head>
-  <body
-    th:fragment="body-start(pageClass)"
-    th:class="'bg-background font-geist-sans text-foreground antialiased ' + ${pageClass}"
-  >
+  <body>
     <div
       class="border-border uk-shadow-sm flex h-9 items-center border-b px-2 py-1"
       th:fragment="header"
     >
       <nav class="flex space-x-1 text-sm">
         <a class="px-3 py-1 font-bold" href="/">Padkell</a>
-        <a class="px-3 py-1" href="#">Home</a>
-        <a class="px-3 py-1" href="#">API</a>
-        <a class="px-3 py-1" href="#">Recursos</a>
+        <a class="px-3 py-1" href="#" th:text="#{nav.home}"></a>
+        <a class="px-3 py-1" href="#" th:text="#{nav.api}"></a>
+        <a class="px-3 py-1" href="#" th:text="#{nav.resources}"></a>
         <div
           class="uk-drop uk-dropdown min-w-48"
           data-uk-drop="mode: click; pos: bottom-left"
         >
           <ul class="uk-dropdown-nav uk-nav">
             <li>
-              <a class="opacity-50">FAQ</a>
+              <a class="opacity-50" th:text="#{nav.faq}"></a>
             </li>
             <li>
-              <a class="opacity-50">Contato</a>
+              <a class="opacity-50" th:text="#{nav.contact}"></a>
             </li>
             <li class="uk-nav-divider"></li>
             <li>
-              <a class="opacity-50">Status</a>
+              <a class="opacity-50" th:text="#{nav.status}"></a>
             </li>
             <li>
-              <a class="opacity-50">Termos de serviço</a>
+              <a class="opacity-50" th:text="#{nav.terms-and-conditions}"></a>
             </li>
           </ul>
         </div>
-        <a class="px-3 py-1" href="#">Ferramentas</a>
-        <a class="px-3 py-1" href="#">Blog</a>
+        <a class="px-3 py-1" href="#" th:text="#{nav.tools}"></a>
+        <a class="px-3 py-1" href="#" th:text="#{nav.blog}"></a>
       </nav>
     </div>
   </body>
