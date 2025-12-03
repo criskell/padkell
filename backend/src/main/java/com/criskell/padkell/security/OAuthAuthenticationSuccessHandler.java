@@ -27,6 +27,13 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        String continueUrl = request.getParameter("continue");
+
+        if (continueUrl != null) {
+            response.sendRedirect(continueUrl);
+            return;
+        }
+        
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         Long userId = Long.parseLong(oAuth2User.getName());
 
