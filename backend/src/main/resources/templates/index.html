@@ -105,6 +105,8 @@
         <textarea
           class="uk-textarea h-full resize-none p-4"
           th:placeholder="#{home.editor.placeholder}"
+          id="editor"
+          name="editor"
         ></textarea>
       </div>
       <div class="flex-none" style="width: 200px">
@@ -129,10 +131,42 @@
       </div>
     </div>
     <div class="flex gap-x-2 px-8 py-6 pt-0">
-      <button class="uk-btn uk-btn-primary" th:text="#{form.submit}"></button>
+      <button
+        class="uk-btn uk-btn-primary"
+        th:text="#{form.submit}"
+        id="pasteSave"
+      ></button>
       <button class="uk-btn uk-btn-secondary uk-btn-icon">
         <span class="size-4"> <uk-icon icon="history"></uk-icon> </span>
       </button>
     </div>
+
+    <script>
+      async function savePaste() {
+        const body = document.getElementById('editor').value;
+        const language = 'php';
+        const title = 'Paste';
+        const categoryId = 1;
+
+        const response = await fetch('/pastes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            title,
+            body,
+            language,
+            categoryId,
+          }),
+        });
+
+        if (response.status === 201) {
+          alert('Paste criado!');
+        }
+      }
+
+      document.getElementById('pasteSave').addEventListener('click', savePaste);
+    </script>
   </body>
 </html>
