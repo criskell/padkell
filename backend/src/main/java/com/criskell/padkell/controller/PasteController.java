@@ -48,7 +48,7 @@ class PasteController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@Valid @RequestBody PasteCreateDto pasteDto,
+    public ResponseEntity<PasteDto> create(@Valid @RequestBody PasteCreateDto pasteDto,
             @AuthenticationPrincipal User user) {
         var category = pasteDto.categoryId() != null
             ? categoryService.findById(pasteDto.categoryId())
@@ -67,6 +67,8 @@ class PasteController {
 
         pasteService.save(paste);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        var pasteCreatedDto = PasteDto.map(paste);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(pasteCreatedDto);
     }
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" class="dark">
+  <head th:replace="~{layouts/app :: head}">
+    <title>Paste</title>
+  </head>
+  <body class="bg-background font-geist-sans text-foreground antialiased">
+    <div th:replace="layouts/app :: header"></div>
+
+    <div
+      class="border-border flex h-16 items-center justify-between border-b px-8 py-4"
+    >
+      <h2 class="text-lg font-semibold" th:text="${paste.title}"></h2>
+      <div class="flex w-full flex-1 items-center justify-end gap-x-2">
+        <div class="h-10 w-[200px] lg:w-[300px]"></div>
+      </div>
+    </div>
+    <div class="flex gap-x-6 px-8 py-6" style="height: 700px">
+      <div class="flex-1">
+        <textarea
+          class="uk-textarea h-full resize-none p-4"
+          th:placeholder="#{home.editor.placeholder}"
+          id="editor"
+          name="editor"
+          th:text="${paste.body}"
+        ></textarea>
+      </div>
+    </div>
+    <div class="flex gap-x-2 px-8 py-6 pt-0">
+      <button
+        class="uk-btn uk-btn-primary"
+        th:text="#{form.submit}"
+        id="pasteSave"
+      ></button>
+    </div>
+  </body>
+</html>

@@ -146,7 +146,6 @@
         const body = document.getElementById('editor').value;
         const language = 'php';
         const title = 'Paste';
-        const categoryId = 1;
 
         const response = await fetch('/pastes', {
           method: 'POST',
@@ -157,12 +156,13 @@
             title,
             body,
             language,
-            categoryId,
           }),
         });
 
         if (response.status === 201) {
-          alert('Paste criado!');
+          const body = await response.json();
+
+          location.href = `/web/pastes/${body.shortId}`;
         }
       }
 
