@@ -1,5 +1,6 @@
 package com.criskell.padkell.security;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -37,8 +38,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             throw new IllegalArgumentException("Provider not supported: " + oAuthProvider);
         }
 
-        System.out.println("User ID: " + user.getId());
+        Map<String, Object> userAttributes = new HashMap<>();
 
-        return new DefaultOAuth2User(oAuth2User.getAuthorities(), Map.of("userId", user.getId()), "userId");
+        userAttributes.put("userId", user.getId());
+        userAttributes.put("name", user.getName());
+        userAttributes.put("email", user.getEmail());
+        userAttributes.put("pictureUrl", user.getProviderPictureUrl());
+
+        return new DefaultOAuth2User(oAuth2User.getAuthorities(), userAttributes, "userId");
     }
 }

@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .authorizationRequestResolver(customAuthorizationRequestResolver)
                     )
                     .successHandler(oAuth2SuccessHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

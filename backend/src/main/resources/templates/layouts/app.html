@@ -75,7 +75,10 @@
         <a class="px-3 py-1" href="#" th:text="#{nav.tools}"></a>
         <a class="px-3 py-1" href="#" th:text="#{nav.blog}"></a>
 
-        <div style="margin-left: auto !important">
+        <div
+          style="margin-left: auto !important"
+          class="flex space-x-2 items-center"
+        >
           <a class="py-1 px-3 flex" href="#" th:text="#{header.language.title}">
           </a>
 
@@ -90,6 +93,34 @@
               <li><a href="?lang=en_US" th:text="#{language.english}"></a></li>
               <li><a href="?lang=he" th:text="#{language.hebraic}"></a></li>
             </ul>
+          </div>
+
+          <a
+            class="py-1 px-3 flex"
+            href="/web/auth/sign-in"
+            th:text="#{login.submit}"
+            sec:authorize="!isAuthenticated()"
+          >
+          </a>
+
+          <div
+            sec:authorize="isAuthenticated()"
+            class="flex space-x-4 items-center"
+          >
+            <div class="flex justify-center space-x-1 items-center">
+              <div class="uk-avatar uk-avatar-rounded w-6 h-6">
+                <div class="uk-avatar-image">
+                  <img
+                    th:src="${#authentication.principal.attributes['pictureUrl']}"
+                    alt=""
+                  />
+                </div>
+              </div>
+
+              <p>Olá, [[${#authentication.principal.attributes['name']}]]</p>
+            </div>
+
+            <a href="/logout">Sair</a>
           </div>
         </div>
       </nav>
