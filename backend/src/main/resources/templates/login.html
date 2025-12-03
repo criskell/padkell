@@ -60,10 +60,16 @@
                 >
                 </span>
               </div>
-              <button
+              <a
                 class="uk-btn uk-btn-default w-full"
                 th:text="#{login.google}"
-              ></button>
+                href="/oauth2/authorization/google"
+              ></a>
+              <a
+                class="uk-btn uk-btn-default w-full"
+                th:text="#{login.github}"
+                href="/oauth2/authorization/github"
+              ></a>
             </form>
           </div>
         </div>
