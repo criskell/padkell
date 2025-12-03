@@ -117,10 +117,12 @@
                 </div>
               </div>
 
-              <p>Olá, [[${#authentication.principal.attributes['name']}]]</p>
+              <p
+                th:text="#{greeting(${#authentication.principal.attributes['name']})}"
+              ></p>
             </div>
 
-            <a href="/web/auth/logout">Sair</a>
+            <a href="/web/auth/logout" th:text="#{logout}"></a>
           </div>
         </div>
       </nav>
