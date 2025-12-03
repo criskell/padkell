@@ -47,6 +47,20 @@ Ambos os frontends consomem um mesmo backend na pasta `backend`, feito com Sprin
 #### Editar paste (página em hebraico)
 ![Página de editar paste](./demos/java_frontend_5.png)
 
+### Front-end com Next.js
+
+#### Página inicial
+![Página inicial](./demos/next_frontend_1.png)
+
+#### Visualizar paste
+![Visualizar paste](./demos/next_frontend_2.png)
+
+#### Página de autenticação
+![Autenticação](./demos/next_frontend_3.png)
+
+#### Página de cadastro
+![Cadastro](./demos/next_frontend_4.png)
+
 ## Arquitetura de software
 
 O backend foi pensando feito numa arquitetura em camadas com:
