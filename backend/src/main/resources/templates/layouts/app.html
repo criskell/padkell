@@ -24,24 +24,22 @@
       const htmlElement = document.documentElement;
 
       const __FRANKEN__ = JSON.parse(
-        localStorage.getItem("__FRANKEN__") || "{}"
+        localStorage.getItem('__FRANKEN__') || '{}'
       );
 
       if (
-        __FRANKEN__.mode === "dark" ||
+        __FRANKEN__.mode === 'dark' ||
         (!__FRANKEN__.mode &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
       ) {
-        htmlElement.classList.add("dark");
-      } else {
-        // htmlElement.classList.remove('dark');
+        htmlElement.classList.add('dark');
       }
 
-      htmlElement.classList.add(__FRANKEN__.theme || "uk-theme-emerald");
-      htmlElement.classList.add(__FRANKEN__.radii || "uk-radii-md");
-      htmlElement.classList.add(__FRANKEN__.shadows || "uk-shadows-sm");
-      htmlElement.classList.add(__FRANKEN__.font || "uk-font-sm");
-      htmlElement.classList.add(__FRANKEN__.chart || "uk-chart-default");
+      htmlElement.classList.add(__FRANKEN__.theme || 'uk-theme-emerald');
+      htmlElement.classList.add(__FRANKEN__.radii || 'uk-radii-md');
+      htmlElement.classList.add(__FRANKEN__.shadows || 'uk-shadows-sm');
+      htmlElement.classList.add(__FRANKEN__.font || 'uk-font-sm');
+      htmlElement.classList.add(__FRANKEN__.chart || 'uk-chart-default');
     </script>
   </head>
   <body>
@@ -49,7 +47,7 @@
       class="border-border uk-shadow-sm flex h-9 items-center border-b px-2 py-1"
       th:fragment="header"
     >
-      <nav class="flex space-x-1 text-sm">
+      <nav class="flex space-x-1 text-sm w-full">
         <a class="px-3 py-1 font-bold" href="/">Padkell</a>
         <a class="px-3 py-1" href="#" th:text="#{nav.home}"></a>
         <a class="px-3 py-1" href="#" th:text="#{nav.api}"></a>
@@ -77,7 +75,7 @@
         <a class="px-3 py-1" href="#" th:text="#{nav.tools}"></a>
         <a class="px-3 py-1" href="#" th:text="#{nav.blog}"></a>
 
-        <div>
+        <div style="margin-left: auto !important">
           <a class="py-1 px-3 flex" href="#" th:text="#{header.language.title}">
           </a>
 

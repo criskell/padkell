@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" class="dark">
+  <head th:replace="~{layouts/app :: head}">
+    <title>Login</title>
+  </head>
+  <body class="bg-background font-geist-sans text-foreground antialiased">
+    <div th:replace="layouts/app :: header"></div>
+
+    <div class="grid min-h-svh lg:grid-cols-2">
+      <div class="flex flex-col gap-4 p-6 md:p-10">
+        <div class="flex flex-1 items-center justify-center">
+          <div class="w-full max-w-sm">
+            <div class="flex flex-col items-center gap-2 text-center">
+              <h1 class="uk-h4" th:text="#{login.title}"></h1>
+              <p
+                class="text-muted-foreground"
+                th:text="#{login.description}"
+              ></p>
+            </div>
+            <form class="mt-6 space-y-6" action="#" method="POST">
+              <div class="grid gap-y-1">
+                <label
+                  class="uk-form-label"
+                  for="email"
+                  th:text="#{login.email.label}"
+                ></label>
+                <input class="uk-input" id="email" type="text" />
+              </div>
+              <div class="grid gap-y-1">
+                <label
+                  class="uk-form-label"
+                  for="password"
+                  th:text="#{login.password.label}"
+                ></label>
+                <input class="uk-input" id="password" type="password" />
+              </div>
+              <div class="flex justify-between">
+                <label for="remember">
+                  <input name="remember" type="hidden" value="0" />
+                  <input
+                    class="uk-checkbox mr-1"
+                    id="remember"
+                    name="remember"
+                    type="checkbox"
+                    value="1"
+                  />
+                  [[#{login.remember}]]
+                </label>
+              </div>
+              <button
+                class="uk-btn uk-btn-primary block w-full"
+                th:text="#{login.submit}"
+              ></button>
+              <div
+                class="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border"
+              >
+                <span
+                  class="text-muted-foreground relative z-10 bg-background px-2"
+                  th:text="#{login.alternative}"
+                >
+                </span>
+              </div>
+              <button
+                class="uk-btn uk-btn-default w-full"
+                th:text="#{login.google}"
+              ></button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="relative hidden bg-muted lg:block"></div>
+    </div>
+  </body>
+</html>
