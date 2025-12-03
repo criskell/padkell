@@ -30,9 +30,12 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String continueUrl = request.getParameter("continue");
+        String state = request.getParameter("state");
 
-        if (continueUrl == null) {
-            continueUrl = request.getParameter("state");
+        System.out.println("state::::"+state);
+
+        if (continueUrl == null && state.equals("/")) {
+            continueUrl = "/";
         }
 
         if (continueUrl != null) {
