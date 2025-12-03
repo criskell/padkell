@@ -29,4 +29,12 @@ public class PasteWebController {
 
         return "show";
     }
+
+    @GetMapping("/{pasteId}/edit")
+    public String edit(@PathVariable String pasteId, Model model) {
+        var paste = pasteService.findByShortId(pasteId).orElseThrow(() ->
+            new RuntimeException(messageService.getLocalizedMessage("paste.not-found")));
+        model.addAttribute("paste", paste);
+        return "edit";
+    }
 }

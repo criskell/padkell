@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.criskell.padkell.dto.PasteCreateDto;
 import com.criskell.padkell.dto.PasteDto;
 import com.criskell.padkell.dto.PasteSummaryDto;
+import com.criskell.padkell.dto.PasteUpdateDto;
 import com.criskell.padkell.entity.Paste;
 import com.criskell.padkell.entity.User;
 import com.criskell.padkell.service.CategoryService;
@@ -70,5 +72,17 @@ class PasteController {
         var pasteCreatedDto = PasteDto.map(paste);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(pasteCreatedDto);
+    }
+
+    @PatchMapping("/{shortId}")
+    public ResponseEntity<PasteDto> patch(
+        @PathVariable String shortId,
+        @Valid @RequestBody PasteUpdateDto pasteUpdateDto,
+        @AuthenticationPrincipal User user
+    ) {
+        return pasteService.updatePartial(shortId, pasteUpdateDto, user)
+            .map(PasteDto::map)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
     }
 }
