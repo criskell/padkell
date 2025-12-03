@@ -114,3 +114,5 @@ cd frontend
 pnpm install
 pnpm run dev
 ```
+
+Para acessar um outro frontend que é embutido no Spring Boot, acesse: http://localhost:8080
