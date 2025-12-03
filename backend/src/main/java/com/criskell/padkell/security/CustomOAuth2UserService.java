@@ -24,9 +24,20 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
-        User user = userService.createOrUpdateFromGoogle(attributes);
+        User user = null;
 
-        System.out.println("abc" + user.getId());
+        String oAuthProvider = userRequest.getClientRegistration().getRegistrationId();
+        String accessToken = userRequest.getAccessToken().getTokenValue();
+
+        if ("google".equals(oAuthProvider)) {
+            user = userService.createOrUpdateFromGoogle(attributes);
+        } else if ("github".equals(oAuthProvider)) {
+            user = userService.createOrUpdateFromGitHub(attributes, accessToken);
+        } else {
+            throw new IllegalArgumentException("Provider not supported: " + oAuthProvider);
+        }
+
+        System.out.println("User ID: " + user.getId());
 
         return new DefaultOAuth2User(oAuth2User.getAuthorities(), Map.of("userId", user.getId()), "userId");
     }
