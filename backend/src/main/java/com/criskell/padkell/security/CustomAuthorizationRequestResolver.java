@@ -2,6 +2,8 @@ package com.criskell.padkell.security;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
@@ -39,11 +41,8 @@ public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRe
         String continueUrl = request.getParameter("continue");
 
         if (continueUrl != null) {
-            String originalRedirectUri = authorizationRequest.getRedirectUri();
-            String newRedirectUri = originalRedirectUri + "?continue=" + URLEncoder.encode(continueUrl, StandardCharsets.UTF_8);
-
             return OAuth2AuthorizationRequest.from(authorizationRequest)
-                .redirectUri(newRedirectUri)
+                .state(continueUrl)
                 .build();
         }
 
