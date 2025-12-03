@@ -50,14 +50,20 @@ class PasteController {
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody PasteCreateDto pasteDto,
             @AuthenticationPrincipal User user) {
-        var category = categoryService.findById(pasteDto.categoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+        var category = pasteDto.categoryId() != null
+            ? categoryService.findById(pasteDto.categoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found"))
+            : null;
         var paste = new Paste();
 
         paste.setBody(pasteDto.body());
         paste.setTitle(pasteDto.title());
         paste.setLanguage(pasteDto.language());
         paste.setAuthor(user);
-        paste.setCategory(category);
+
+        if (category != null) {
+            paste.setCategory(category);
+        }
 
         pasteService.save(paste);
 
