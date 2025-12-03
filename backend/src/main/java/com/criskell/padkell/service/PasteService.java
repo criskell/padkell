@@ -82,5 +82,12 @@ public class PasteService {
             pasteRepository.save(paste);
             return paste;
         });
-    } 
+    }
+
+    public boolean deleteByShortId(String shortId, User user) {
+        return pasteRepository.findByShortId(shortId).map(paste -> {
+            pasteRepository.delete(paste);
+            return true;
+        }).orElse(true);
+    }
 }

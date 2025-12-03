@@ -31,6 +31,10 @@
         th:text="#{form.submit}"
         id="pasteSave"
       ></button>
+
+      <button class="uk-btn uk-btn-destructive uk-btn-icon" id="pasteDelete">
+        <span class="size-4"> <uk-icon icon="trash"></uk-icon> </span>
+      </button>
     </div>
 
     <script th:inline="javascript">
@@ -55,7 +59,25 @@
         });
       }
 
+      async function deletePaste() {
+        const response = await fetch('/pastes/[(${paste.shortId})]', {
+          method: 'DELETE',
+        });
+
+        UIkit.notification({
+          message: [[#{paste.deleted.success}]],
+          status: 'danger',
+          pos: 'top-right',
+          timeout: 5000,
+        });
+
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 3000);
+      }
+
       document.getElementById('pasteSave').addEventListener('click', savePaste);
+      document.getElementById('pasteDelete').addEventListener('click', deletePaste);
     </script>
   </body>
 </html>
