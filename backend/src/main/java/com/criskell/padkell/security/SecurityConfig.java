@@ -48,9 +48,11 @@ public class SecurityConfig {
                     .authorizationEndpoint(authorization -> authorization
                         .authorizationRequestResolver(customAuthorizationRequestResolver)
                     )
-                    .successHandler(oAuth2SuccessHandler))
+                    .successHandler(oAuth2SuccessHandler)
+                    .loginPage("/web/auth/sign-in"))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authenticationProvider(authenticationProvider())
+                .logout(logout -> logout.logoutSuccessUrl("/web/auth/sign-in"))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
