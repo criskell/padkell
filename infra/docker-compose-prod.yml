@@ -1,0 +1,73 @@
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    ports:
+      - "443:443"
+    depends_on:
+      - frontend
+      - api
+    networks:
+      - app
+  api:
+    container_name: api
+    image: ghcr.io/criskell/padkell-api:latest
+    restart: always
+    env_file: ../.env
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    networks:
+      - app
+      - db
+  frontend:
+    container_name: frontend
+    image: ghcr.io/criskell/padkell-frontend:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    networks:
+      - app
+  db:
+    container_name: db
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+    networks:
+      - db
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    env_file: ../.env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      SCRIPT_NAME: /pgadmin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - app
+      - db
+volumes:
+  postgres_data:
+networks:
+  app:
+    driver: bridge
+  db:
+    driver: bridge
